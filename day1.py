@@ -27,6 +27,6 @@ def get_input(file):
         return [int(a) for a in f.read().splitlines()]
 
 
-report = get_input('input.txt')
+report = get_input('data/day1-input.txt')
 print(part1(report))
 print(part2(report))
