@@ -5,9 +5,12 @@ def test():
     assert get_seat_id('BBFFBBFRLL') == 820
 
 
-def get_input(file):
+def get_seats_from_file(file):
+    seats = []
     with open(file) as f:
-        return f.read().splitlines()
+        for line in f.read().splitlines():
+            seats.append(get_seat_id(line))
+    return seats
 
 
 def get_seat_id(seat_partition):
@@ -22,13 +25,10 @@ def find_first_empty_seat(sorted_seats):
             return sorted_seats[i] + 1
 
 
-def get_sorted_seat_list(data):
-    return sorted(list(get_seat_id(line) for line in data))
-
-
 def main():
     test()
-    seats = get_sorted_seat_list(get_input('data/day5-input.txt'))
+    seats = get_seats_from_file('data/day5-input.txt')
+    seats.sort()
     print(f"Highest seat ID: {seats[-1]}")
     print(f"My seat: {find_first_empty_seat(seats)}")
 
