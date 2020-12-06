@@ -7,21 +7,13 @@ def test():
         '..##.......', '#...#...#..', '.#....#..#.', '..#.#...#.#',
         '.#...##..#.', '..#.##.....', '.#.#.#....#', '.#........#',
         '#.##...#...', '#...##....#', '.#..#...#.#']
-    m = generate_map(data)
-    assert solve_part1(m) == 7
-    assert solve_part2(m) == 336
+    assert solve_part1(data) == 7
+    assert solve_part2(data) == 336
 
 
 def get_input(file):
     with open(file) as f:
         return f.read().splitlines()
-
-
-def generate_map(data):
-    a_map = []
-    for line in data:
-        a_map.append(list(line))
-    return a_map
 
 
 def get_tree_count(a_map, slope):
@@ -39,11 +31,11 @@ def get_tree_count(a_map, slope):
 
 
 def solve_part1(data):
-    return get_tree_count(generate_map(data), slopes[1])
+    return get_tree_count(data, slopes[1])
 
 
 def solve_part2(data):
-    return math.prod(get_tree_count(generate_map(data), s) for s in slopes)
+    return math.prod(get_tree_count(data, s) for s in slopes)
 
 
 def main():
