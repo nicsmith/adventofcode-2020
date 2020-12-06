@@ -10,25 +10,24 @@ def test():
 
 def extract_password_data(password_data):
     policy, password = password_data.split(':')
-    password = password.strip()
-    policy = policy.strip().split(" ")
-    policy_numbers = policy[0].split("-")
-    return int(policy_numbers[0]), int(policy_numbers[1]), policy[1], password
+    policy = policy.strip().split(' ')
+    indexes = policy[0].split("-")
+    return int(indexes[0]), int(indexes[1]), policy[1], password.strip()
 
 
 def validate_part1(password_entry):
-    n1, n2, character, password = extract_password_data(password_entry)
+    min_count, max_count, character, password = extract_password_data(password_entry)
     char_count = password.count(character)
-    return not (char_count < n1 or char_count > n2)
+    return not (char_count < min_count or char_count > max_count)
 
 
 def validate_part2(password_entry):
-    n1, n2, character, password = extract_password_data(password_entry)
-    return (password[n1 - 1] == character) ^ (password[n2 - 1] == character)
+    i, j, character, password = extract_password_data(password_entry)
+    return (password[i - 1] == character) ^ (password[j - 1] == character)
 
 
-def solve(password_data, function):
-    return sum(function(p) for p in password_data)
+def solve(passwords, function):
+    return sum(function(p) for p in passwords)
 
 
 def get_input(file):
