@@ -1,22 +1,10 @@
+# Solution for https://adventofcode.com/2020/day/4
+
 import os
 import re
 
 
 def test():
-    assert validate_birth_year("2002")
-    assert not validate_birth_year("2003")
-    assert validate_height("60in")
-    assert validate_height("190cm")
-    assert not validate_height("190in")
-    assert not validate_height("190")
-    assert validate_hair_colour("#123abc")
-    assert not validate_hair_colour("#123abz")
-    assert not validate_hair_colour("123abc")
-    assert validate_eye_colour("brn")
-    assert not validate_eye_colour("wat")
-    assert validate_passport_id("000000001")
-    assert not validate_passport_id("0123456789")
-
     p1 = {'eyr': '1972', 'cid': '100', 'hcl': '#18171d', 'ecl': 'amb', 'hgt': '170', 'pid': '186cm', 'iyr': '2018', 'byr': '1926'}
     p2 = {'iyr': '2019', 'hcl': '#602927', 'eyr': '1967', 'hgt': '170cm', 'ecl': 'grn', 'pid': '012533040', 'byr': '1946'}
     p3 = {'hcl': 'dab227', 'iyr': '2012', 'ecl': 'brn', 'hgt': '182cm', 'pid': '021572410', 'eyr': '2020', 'byr': '1992', 'cid': '277'}
