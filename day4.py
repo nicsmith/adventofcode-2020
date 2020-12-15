@@ -29,71 +29,30 @@ def get_passports_from_file(file):
     with open(file) as f:
         lines = f.read().split(os.linesep + os.linesep)
         for line in lines:
-            line = line.rstrip().replace(os.linesep, ' ')
             passport = {}
-            for field in line.split(' '):
+            for field in line.split():
                 kvp = field.split(':')
                 passport[kvp[0]] = kvp[1]
             passports.append(passport)
     return passports
 
 
-def validate_year_between(year, year_min, year_max):
-    return bool(re.match(r"^[0-9]{4}$", year)) and year_min <= int(year) <= year_max
-
-
-def validate_hair_colour(hcl):
-    return bool(re.match(r"#[0-9a-f]{6}", hcl))
-
-
-def validate_height(height):
-    p = re.compile('^([0-9]+)(cm|in)$')
-    m = p.match(height)
-    valid_height = False
-    if bool(m):
-        amount = int(m.group(1))
-        unit = m.group(2)
-        if unit == 'cm':
-            valid_height = 150 <= amount <= 193
-        elif unit == 'in':
-            valid_height = 59 <= amount <= 76
-    return valid_height
-
-
-def validate_birth_year(year):
-    return validate_year_between(year, 1920, 2002)
-
-
-def validate_issue_year(year):
-    return validate_year_between(year, 2010, 2020)
-
-
-def validate_expiration_year(year):
-    return validate_year_between(year, 2020, 2030)
-
-
-def validate_eye_colour(ecl):
-    return bool(re.match("^(amb|blu|brn|gry|grn|hzl|oth)$", ecl))
-
-
-def validate_passport_id(pid):
-    return bool(re.match(r"^[0-9]{9}$", pid))
+valid_fields = {
+    'hcl': '#[0-9a-f]{6}',
+    'ecl': '^(amb|blu|brn|gry|grn|hzl|oth)$',
+    'byr': '^19[2-9][0-9]|200[0-2]$',
+    'iyr': '^201[0-9]|2020$',
+    'eyr': '^202[0-9]|2030$',
+    'hgt':  '^(1[5-8][0-9]|19[0-3])cm|(59|6[0-9]|7[0-6])in$',
+    'pid':  '^[0-9]{9}$'}
 
 
 def validate_passport_part1(passport):
-    required_fields = ['ecl', 'pid', 'eyr', 'hcl', 'byr', 'iyr', 'hgt']
-    return all(f in passport for f in required_fields)
+    return all(f in passport for f in valid_fields)
 
 
 def validate_passport_part2(passport):
-    return (validate_passport_part1(passport) and
-            validate_birth_year(passport['byr']) and
-            validate_issue_year(passport['iyr']) and
-            validate_expiration_year(passport['eyr']) and
-            validate_height(passport['hgt']) and
-            validate_hair_colour(passport['hcl']) and
-            validate_eye_colour(passport['ecl']) and
-            validate_passport_id(passport['pid']))
+    return all(f in passport and re.match(valid_fields[f], passport[f]) for f in valid_fields)
 
 
 def solve(fn, passports):
