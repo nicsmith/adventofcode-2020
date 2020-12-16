@@ -38,7 +38,7 @@ def get_passports_from_file(file):
 
 
 valid_fields = {
-    'hcl': '#[0-9a-f]{6}',
+    'hcl': '^#[0-9a-f]{6}$',
     'ecl': '^(amb|blu|brn|gry|grn|hzl|oth)$',
     'byr': '^19[2-9][0-9]|200[0-2]$',
     'iyr': '^201[0-9]|2020$',
