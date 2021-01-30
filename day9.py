@@ -18,12 +18,10 @@ def find_previous_sum(sequence, index, limit):
 
 
 def find_first_weak_number(sequence):
-    limit = 25
-    i = limit
-    while i < len(sequence):
-        if find_previous_sum(sequence, i, limit) is None:
-            return int(sequence[i])
+    i = limit = 25
+    while i < len(sequence) and find_previous_sum(sequence, i, limit) is not None:
         i += 1
+    return int(sequence[i]) if i < len(sequence) else None
 
 
 def find_encryption_weakness(sequence, weak_number):
